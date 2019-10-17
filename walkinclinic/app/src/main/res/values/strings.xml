@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AugustVersion</string>
+
+    <string-array name="roles">
+        <item>Client</item>
+        <item>Employee</item>
+    </string-array>
+
+</resources>
