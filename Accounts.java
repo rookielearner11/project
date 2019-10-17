@@ -7,5 +7,27 @@
 */
 
 public class Account{
-
+	protected String email;
+	protected String password;
+	protected String role;
+	protected String name;
+	final protected Account = Account()
+    public Account(String email, String password, String role, String name){
+    	this.email = email.toUpperCase();
+    	this.password = password;
+    	this.role = role.toUpperCase();
+    	this.name = name;
+    }
+    public String getEmail(){
+    	return this.email;
+    }
+    public String getPwd(){
+    	return this.password;
+    }
+    public String getRole(){
+    	return this.role;
+    }
+    public String getName(){
+    	return this.name;
+    }
 }
