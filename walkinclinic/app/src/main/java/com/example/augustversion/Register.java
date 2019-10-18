@@ -10,7 +10,7 @@ import android.widget.Spinner;
 
 import java.lang.reflect.Array;
 
-public class Register extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Register extends AppCompatActivity {
 
 
     @Override
