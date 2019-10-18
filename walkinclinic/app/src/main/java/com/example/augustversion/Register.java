@@ -10,7 +10,7 @@ import android.widget.Spinner;
 
 import java.lang.reflect.Array;
 
-public class Register extends AppCompatActivity {
+public class Register extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 
     @Override
@@ -32,6 +32,11 @@ public class Register extends AppCompatActivity {
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }
