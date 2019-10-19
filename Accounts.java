@@ -31,3 +31,9 @@ public class Account{
     	return this.name;
     }
 }
+DatabaseReference accountsRef = ref.child("accounts");
+
+Map<String, User> accounts = new HashMap<>();
+//accounts.put("alanisawesome", new Account("June 23, 1912", "Alan Turing"));
+//accounts.put("gracehop", new Account("December 9, 1906", "Grace Hopper"));
+accountsRef.setValueAsync(accounts);
