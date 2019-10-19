@@ -14,10 +14,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Register extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
     EditText emailR, pwd1R,pwd2R,nameR,roleR;
     Button btn;
     FirebaseAuth myFirebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         myFirebaseAuth = FirebaseAuth.getInstance();
@@ -27,6 +28,8 @@ public class Register extends AppCompatActivity {
         pwd2R = findViewById(R.id.pwd2);
         roleR = findViewById(R.id.role);
         btn = findViewById(R.id.btn);
+
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,13 +48,13 @@ public class Register extends AppCompatActivity {
                     emailR.setError("You must enter all the information required");
                     roleR.setError("You must enter all the information required");
                 } else{
-                    myFirebaseAuth.createUserWithEmailAndPassword(email,pwd1).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
+                    myFirebaseAuth.createUserWithEmailAndPassword(email,pwd1).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (!task.isSuccessful()){
-                                Toast.makeText(Register.this, "Fields Are Empty!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "Fields Are Empty!", Toast.LENGTH_SHORT).show();
                             }else{
-                                startActivity(new Intent(Register.this, MainActivity.class));
+                                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                             }
                         }
                     });
