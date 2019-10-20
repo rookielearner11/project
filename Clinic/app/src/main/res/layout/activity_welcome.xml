@@ -6,4 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".welcome">
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="206dp"
+        android:text="TextView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="187dp" />
+
+    <Button
+        android:id="@+id/Logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Out"
+        tools:layout_editor_absoluteX="167dp"
+        tools:layout_editor_absoluteY="472dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

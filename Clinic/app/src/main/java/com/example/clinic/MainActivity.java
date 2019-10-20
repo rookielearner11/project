@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     EditText email, pwd;
     Button signBtn, regBtn;
     FirebaseAuth myFirebaseAuth;
+    public String eml;
     private FirebaseAuth.AuthStateListener myListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         signBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String eml = email.getText().toString();
+                eml = email.getText().toString();
                 String pw = pwd.getText().toString();
                 if (pw.isEmpty()|| eml.isEmpty()){
                     pwd.setError("You must enter all the information required");
