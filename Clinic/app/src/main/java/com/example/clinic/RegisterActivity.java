@@ -27,7 +27,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
         myFirebaseAuth = FirebaseAuth.getInstance();
         nameR = findViewById(R.id.name);
         emailR = findViewById(R.id.email);
@@ -40,8 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                super.onCreate(savedInstanceState);
-                setContentView(R.layout.activity_register);
+
                 final String name = nameR.getText().toString();
                 final String email = emailR.getText().toString();
                 final String pwd1 = pwd1R.getText().toString();
