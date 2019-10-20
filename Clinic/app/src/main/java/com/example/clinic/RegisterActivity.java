@@ -27,7 +27,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
         myFirebaseAuth = FirebaseAuth.getInstance();
         nameR = findViewById(R.id.name);
         emailR = findViewById(R.id.email);
@@ -45,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String pwd1 = pwd1R.getText().toString();
                 final String pwd2 = pwd2R.getText().toString();
                 final String role = roleR.getText().toString();
-                if(pwd1 != pwd2){
+                if(!pwd1.equals(pwd2)){
                     pwd1R.setError("Passwords you entered are not matched");
                     pwd2R.setError("Passwords you entered are not matched");
                 } else if (name.isEmpty() || pwd1.isEmpty() || pwd2.isEmpty() || email.isEmpty() || role.isEmpty()){
@@ -79,7 +80,6 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+
     }
 }
