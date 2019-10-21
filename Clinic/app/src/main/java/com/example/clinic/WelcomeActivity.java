@@ -33,9 +33,8 @@ public class WelcomeActivity extends AppCompatActivity {
     public String email;
     public String role;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    String eml2 = MainActivity.eml.replace(".","SMARTSCOTT");
-    DatabaseReference rname = database.getReference("users/"+eml2+"/name");
-    DatabaseReference rrole = database.getReference("users/"+eml2+"/role");
+    DatabaseReference rname = database.getReference("/name");
+    DatabaseReference rrole = database.getReference("/role");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
