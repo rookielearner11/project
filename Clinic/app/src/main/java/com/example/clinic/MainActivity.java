@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     EditText email, pwd;
     Button signBtn, regBtn;
     FirebaseAuth myFirebaseAuth;
-    public String eml;
+    public static String eml;
     private FirebaseAuth.AuthStateListener myListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

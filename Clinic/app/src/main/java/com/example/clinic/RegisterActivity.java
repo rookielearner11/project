@@ -65,16 +65,17 @@ public class RegisterActivity extends AppCompatActivity {
                             if (!task.isSuccessful()){
                                 Toast.makeText(RegisterActivity.this, "Error Occoured!", Toast.LENGTH_SHORT).show();
                             }else{
-                                DatabaseReference myRef1 = database.getReference("users/"+name+"/email");
+                                String eml = email.replace(".","SMARTSCOTT");
+                                DatabaseReference myRef1 = database.getReference("users/"+eml+"/email");
                                 myRef1.setValue(email);
 
-                                DatabaseReference myRef2 = database.getReference("users/"+name+"/password");
+                                DatabaseReference myRef2 = database.getReference("users/"+eml+"/password");
                                 myRef2.setValue(pwd1);
 
-                                DatabaseReference myRef3 = database.getReference("users/"+name+"/role");
+                                DatabaseReference myRef3 = database.getReference("users/"+eml+"/role");
                                 myRef3.setValue(role);
 
-                                DatabaseReference myRef4 = database.getReference("users/"+name+"/name");
+                                DatabaseReference myRef4 = database.getReference("users/"+eml+"/name");
                                 myRef4.setValue(name);
                                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                             }
