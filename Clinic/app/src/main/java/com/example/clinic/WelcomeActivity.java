@@ -36,6 +36,11 @@ public class WelcomeActivity extends AppCompatActivity {
     String eml2 = MainActivity.eml.replace(".","SMARTSCOTT");
     DatabaseReference rname = database.getReference("users/"+eml2+"/name");
     DatabaseReference rrole = database.getReference("users/"+eml2+"/role");
+    TextView textview1 = findViewById(R.id.textView10);
+    TextView textview2 = findViewById(R.id.textView11);
+
+    TextView textview3 = findViewById(R.id.textView8);
+    TextView textview4 = findViewById(R.id.textView9);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +56,8 @@ public class WelcomeActivity extends AppCompatActivity {
         });
 
 
-
-        textview = findViewById(R.id.textView8);
-        textview.setText("Welcome " + uname + ", "+
-                "\n You signed in as "+ role +".");
+        textview1.setText("Welcome ");
+        textview3.setText("You signed in as ");
 
     }
     public void readFromDatabaseU(){
@@ -64,6 +67,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 uname = dataSnapshot.getValue(String.class);
+                textview2.setText(uname);
             }
 
             @Override
@@ -81,6 +85,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 role = dataSnapshot.getValue(String.class);
+                textview4.setText(role);
             }
 
             @Override
