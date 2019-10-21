@@ -49,13 +49,8 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
 
-        textview1 = findViewById(R.id.textView10);
-        textview2 = findViewById(R.id.textView11);
-
-        textview3 = findViewById(R.id.textView8);
-        textview4 = findViewById(R.id.textView9);
-        textview1.setText("Welcome ");
-        textview3.setText("You signed in as ")
+        TextView textview1 = findViewById(R.id.textView8);
+        textview1.setText("You signed in as "
         + uname + ", "+
                 "\n You signed in as "+ role +".");
 
@@ -93,7 +88,5 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
     }
-
-    public String
 
 }
