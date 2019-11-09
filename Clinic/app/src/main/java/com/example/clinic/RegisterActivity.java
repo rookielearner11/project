@@ -61,17 +61,24 @@ public class RegisterActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (!task.isSuccessful()){
                                 Toast.makeText(RegisterActivity.this, "Error Occoured!", Toast.LENGTH_SHORT).show();
-                            }else{
-                                DatabaseReference myRef1 = database.getReference("email");
+                            }else if (role.equals("Employee")){
+                                DatabaseReference myRef1 = database.getReference("employee/"+email.hashCode()+"/email");
                                 myRef1.setValue(email);
 
-                                DatabaseReference myRef2 = database.getReference("password");
+                                DatabaseReference myRef2 = database.getReference("employee/"+email.hashCode()+"/password");
                                 myRef2.setValue(pwd1);
 
-                                DatabaseReference myRef3 = database.getReference("role");
-                                myRef3.setValue(role);
+                                DatabaseReference myRef4 = database.getReference("employee/"+email.hashCode()+"/name");
+                                myRef4.setValue(name);
+                                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                            }else{
+                                DatabaseReference myRef1 = database.getReference("patient/"+email.hashCode()+"/email");
+                                myRef1.setValue(email);
 
-                                DatabaseReference myRef4 = database.getReference("name");
+                                DatabaseReference myRef2 = database.getReference("patient/"+email.hashCode()+"/password");
+                                myRef2.setValue(pwd1);
+
+                                DatabaseReference myRef4 = database.getReference("patient/"+email.hashCode()+"/name");
                                 myRef4.setValue(name);
                                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                             }

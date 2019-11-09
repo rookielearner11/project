@@ -47,13 +47,7 @@ public class MainActivity extends AppCompatActivity {
         myListener = new FirebaseAuth.AuthStateListener(){
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth){
-                FirebaseUser myUser = myFirebaseAuth.getCurrentUser();
-                if(myUser != null){
-                    Toast.makeText(MainActivity.this, "You logged in", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
-                }else{
-                    Toast.makeText(MainActivity.this, "Please log in", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(MainActivity.this, "Please log in", Toast.LENGTH_SHORT).show();
             }
         };
         signBtn = findViewById(R.id.signBtn);
