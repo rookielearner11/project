@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     pwd.setError("You must enter all the information required");
                     email.setError("You must enter all the information required");
                 } else if (eml.equals("admin") && pw.equals("5T5ptQ") ){
-                    startActivity( new Intent(MainActivity.this, WelcomeActivity.class));
+                    startActivity( new Intent(MainActivity.this, Admin.class));
                 } else if (!pw.isEmpty() && !eml.isEmpty()){
                     myFirebaseAuth.signInWithEmailAndPassword(eml,pw).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>(){
                         @Override

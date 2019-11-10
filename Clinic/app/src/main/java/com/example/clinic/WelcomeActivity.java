@@ -81,10 +81,7 @@ public class WelcomeActivity extends AppCompatActivity {
         //////       If you sign in as administrator:
         //////       Bottom lines of the code you should not add any operation that not belongs to administrator
         //////       Under those codes                     August's working zone!
-        if (MainActivity.emlh == 92668751 ){
-            text1.setText("Hello administrator");
-            text2.setText("You have signed in as administrator");
-        }
+
     }
 
 
