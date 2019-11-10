@@ -1,5 +1,6 @@
 package com.example.clinic;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -31,15 +32,10 @@ public class WelcomeActivity extends AppCompatActivity {
     // Initialize Firebase Auth
 
     FirebaseAuth mAuth;
-    private DatabaseReference rname = FirebaseDatabase.getInstance().getReference("name");
-    private DatabaseReference remail = FirebaseDatabase.getInstance().getReference("email");
-    private DatabaseReference rrole = FirebaseDatabase.getInstance().getReference("role");
-    //private DatabaseReference rname = FirebaseDatabase.getInstance().getReference("name");
+    private DatabaseReference emlp = FirebaseDatabase.getInstance().getReference(String.valueOf(MainActivity.emlh));
 
     TextView text1;
-
     TextView text2;
-    TextView text3;
 
     //public String uid;
     public String uname;
@@ -64,71 +60,29 @@ public class WelcomeActivity extends AppCompatActivity {
         });
         text1 = findViewById(R.id.tname);
         text2 = findViewById(R.id.temail);
-        text3 = findViewById(R.id.trole);
-        readFromDatabaseU();
-        readFromDatabaseE();
-        readFromDatabaseR();
 
-
-
-
-
-
-    }
-
-    public void readFromDatabaseU(){
-        rname.addValueEventListener(new ValueEventListener() {
+        emlp.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                uname = dataSnapshot.getValue(String.class);
-                Log.d("andy", "Value is: " + uname);
-                text1.setText(uname);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //// Code needs to be changed
+//                uname = dataSnapshot.child("name").getValue().toString();
+//                email = dataSnapshot.child("email").getValue().toString();
+//                role = dataSnapshot.child("role").getValue().toString();
+//                text1.setText("Hello "+uname);
+//                text2.setText("You have signed in as " + role);
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("andy", "Failed to read value.", error.toException());
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-    }
-    public void readFromDatabaseE(){
-        remail.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                email = dataSnapshot.getValue(String.class);
-                Log.d("andy", "Value is: " + email);
-                text2.setText(email);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("andy", "Failed to read value.", error.toException());
-            }
-        });
-    }
-    public void readFromDatabaseR(){
-        rrole.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                role = dataSnapshot.getValue(String.class);
-                Log.d("andy", "Value is: " + role);
-                text3.setText(role);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("andy", "Failed to read value.", error.toException());
-            }
-        });
+
+
+
+
+
     }
 
 
