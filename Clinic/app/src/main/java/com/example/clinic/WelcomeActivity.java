@@ -49,6 +49,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         mAuth = FirebaseAuth.getInstance();
+        final Button btn_logout= findViewById(R.id.btn_signout);
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
