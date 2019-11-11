@@ -81,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 DatabaseReference myRef2 = database.getReference("acc/patient/"+email.hashCode()+"/password");
                                 myRef2.setValue(pwd1);
 
-                                DatabaseReference myRef3 = database.getReference("acc/employee/"+email.hashCode()+"/role");
+                                DatabaseReference myRef3 = database.getReference("acc/patient/"+email.hashCode()+"/role");
                                 myRef3.setValue(role);
 
                                 DatabaseReference myRef4 = database.getReference("acc/patient/"+email.hashCode()+"/name");
