@@ -83,12 +83,18 @@ public class MainActivity extends AppCompatActivity {
         regBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String eml = email.getText().toString();
-                String pw = pwd.getText().toString();
+                final String eml = email.getText().toString();
+                final String pw = pwd.getText().toString();
+                if (eml.equals("") || pw.equals("")){
+                    Toast.makeText(MainActivity.this, "Please enter your email and password first, then click sign up button :)", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 myFirebaseAuth.createUserWithEmailAndPassword(eml,pw).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
+
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         if (!task.isSuccessful()){
                             Toast.makeText(MainActivity.this, "Error Occoured!", Toast.LENGTH_SHORT).show();
                         }else{
