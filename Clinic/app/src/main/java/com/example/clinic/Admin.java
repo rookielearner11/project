@@ -62,9 +62,9 @@ public class Admin extends AppCompatActivity {
                 final String serviceRole = text5.getText().toString();
 
                 if(!service.isEmpty() && !serviceWorker.isEmpty() && !serviceRole.isEmpty()) {
-                    DatabaseReference myRef1 = database.getReference("clinic-d1/services/" + service);
-                    DatabaseReference myRef2 = database.getReference("clinic-d1/services/" + service + "/Name");
-                    DatabaseReference myRef3 = database.getReference("clinic-d1/services/" + service + "/Role");
+                    DatabaseReference myRef1 = database.getReference("services/" + service);
+                    DatabaseReference myRef2 = database.getReference("services/" + service + "/Name");
+                    DatabaseReference myRef3 = database.getReference("services/" + service + "/Role");
 
                     myRef1.setValue(service);
                     myRef2.setValue(serviceWorker);
@@ -85,7 +85,7 @@ public class Admin extends AppCompatActivity {
             public void onClick(View v) {
                 final String service = text3.getText().toString();
                 if(!service.isEmpty()) {
-                    DatabaseReference myReference = database.getReference("clinic-d1/services/" + service);
+                    DatabaseReference myReference = database.getReference("services/" + service);
                     myReference.removeValue();
 
                     Toast.makeText(Admin.this, "Service is deleted", Toast.LENGTH_SHORT).show();
