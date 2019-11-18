@@ -83,7 +83,19 @@ public class MainActivity extends AppCompatActivity {
         regBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                String eml = email.getText().toString();
+                String pw = pwd.getText().toString();
+
+                myFirebaseAuth.createUserWithEmailAndPassword(eml,pw).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()){
+                            Toast.makeText(MainActivity.this, "Error Occoured!", Toast.LENGTH_SHORT).show();
+                        }else{
+                            startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                        }
+                    }
+                });
             }
         });
 

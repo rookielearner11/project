@@ -1,13 +1,18 @@
 package com.example.clinic;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
@@ -24,23 +29,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class WelcomeActivity extends AppCompatActivity {
-    //private FirebaseAuth mAuth;// ...
-    // Initialize Firebase Auth
+    private static final String TAG = "WelcomeActivity";
 
-    FirebaseAuth mAuth;
-    private DatabaseReference emlp = FirebaseDatabase.getInstance().getReference(String.valueOf(MainActivity.emlh));
-
-    TextView text1;
-    TextView text2;
-
-    //public String uid;
-    public String uname;
-    public String email;
-    public String role;
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference myRef;
+    private  String userID;
+    private ListView mListView;
 
 
 
@@ -48,8 +49,28 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        mListView = (ListView) findViewById(R.id.listview);
         mAuth = FirebaseAuth.getInstance();
-        final Button btn_logout= findViewById(R.id.btn_signout);
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
+
+        final Button btn_delete = findViewById(R.id.btn_delete);
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                DatabaseReference myReference = mFirebaseDatabase.getReference("Users/" + userID);
+                myReference.removeValue();
+                user.delete();
+                mAuth.signOut();
+                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+            }
+        });
+        final Button btn_logout = findViewById(R.id.btn_signout);
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,38 +78,81 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
             }
         });
-        text1 = findViewById(R.id.tname);
-        text2 = findViewById(R.id.temail);
 
 
-        emlp.addValueEventListener(new ValueEventListener() {
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //// Code needs to be changed
-//                uname = dataSnapshot.child("name").getValue().toString();
-//                email = dataSnapshot.child("email").getValue().toString();
-//                role = dataSnapshot.child("role").getValue().toString();
-//                text1.setText("Hello "+uname);
-//                text2.setText("You have signed in as " + role);
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    toastMessage("Successfully signed in with: " + user.getEmail());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    toastMessage("Successfully signed out.");
+                }
+                // ...
+            }
+        };
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                showData(dataSnapshot);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
+    }
+    private void showData(DataSnapshot dataSnapshot) {
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
+            UserInformation uInfo = new UserInformation();
+            uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName()); //set the name
+            uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail()); //set the email
+            uInfo.setRole(ds.child(userID).getValue(UserInformation.class).getRole()); //set the phone_num
 
-        //////       If you sign in as administrator:
-        //////       Bottom lines of the code you should not add any operation that not belongs to administrator
-        //////       Under those codes                     August's working zone!
+            //display all the information
+            Log.d(TAG, "showData: name: " + uInfo.getName());
+            Log.d(TAG, "showData: email: " + uInfo.getEmail());
+            Log.d(TAG, "showData: phone_num: " + uInfo.getRole());
 
+            ArrayList<String> array  = new ArrayList<>();
+            array.add(uInfo.getName());
+            array.add(uInfo.getEmail());
+            array.add(uInfo.getRole());
+            ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,array);
+            mListView.setAdapter(adapter);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
 
+    private void toastMessage(String message ) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
 
 
-
-
+    }
 
 
 }
