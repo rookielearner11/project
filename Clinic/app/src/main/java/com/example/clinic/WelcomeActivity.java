@@ -1,26 +1,17 @@
 package com.example.clinic;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
-import android.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,8 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class WelcomeActivity extends AppCompatActivity {
     private static final String TAG = "WelcomeActivity";
@@ -42,6 +31,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private  String userID;
     private ListView mListView;
+    private FirebaseUser users;
 
 
 
@@ -54,30 +44,11 @@ public class WelcomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
-        final FirebaseUser user = mAuth.getCurrentUser();
-        userID = user.getUid();
-
-        final Button btn_delete = findViewById(R.id.btn_delete);
-        btn_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        users = mAuth.getCurrentUser();
+        userID = users.getUid();
 
 
-                DatabaseReference myReference = mFirebaseDatabase.getReference("Users/" + userID);
-                myReference.removeValue();
-                user.delete();
-                mAuth.signOut();
-                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-            }
-        });
-        final Button btn_logout = findViewById(R.id.btn_signout);
-        btn_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-            }
-        });
+
 
 
 
@@ -110,7 +81,28 @@ public class WelcomeActivity extends AppCompatActivity {
 
             }
         });
+        final Button btn_delete = findViewById(R.id.btn_delete);
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+
+                DatabaseReference myReference = mFirebaseDatabase.getReference("Users/" + userID);
+                myReference.removeValue();
+                users.delete();
+                mAuth.signOut();
+                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+            }
+        });
+
+        final Button btn_logout = findViewById(R.id.btn_signout);
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+            }
+        });
     }
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
