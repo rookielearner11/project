@@ -23,8 +23,8 @@
             <ListView
                 android:id="@+id/listview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" >
+                android:layout_height="482dp"
+                android:layout_weight="1">
 
             </ListView>
         </LinearLayout>
@@ -34,6 +34,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="SIgn out" />
+
+        <Button
+            android:id="@+id/btn_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Go to Your Provider Profile"
+            android:visibility="visible" />
 
         <Button
             android:id="@+id/btn_delete"

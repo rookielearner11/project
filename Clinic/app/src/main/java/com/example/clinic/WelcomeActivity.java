@@ -57,6 +57,14 @@ public class WelcomeActivity extends AppCompatActivity {
         final FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
 
+        final Button btn_profile = findViewById(R.id.btn_profile);
+        btn_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WelcomeActivity.this, Profile.class));
+            }
+        });
+
         final Button btn_delete = findViewById(R.id.btn_delete);
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
