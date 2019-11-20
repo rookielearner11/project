@@ -42,6 +42,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private  String userID;
     private ListView mListView;
+    static UserInformation uInfo;
 
 
 
@@ -120,7 +121,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
-            UserInformation uInfo = new UserInformation();
+            uInfo = new UserInformation();
             uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName());
             uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail());
             uInfo.setRole(ds.child(userID).getValue(UserInformation.class).getRole());
@@ -179,5 +180,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
     }
 
+    public static UserInformation uInfo(){
+        return new UserInformation(uInfo);
+    }
 
 }

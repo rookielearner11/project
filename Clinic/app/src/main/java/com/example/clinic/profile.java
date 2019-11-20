@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class Profile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final UserInformation uInfo = WelcomeActivity.uInfo();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
@@ -52,6 +54,12 @@ public class Profile extends AppCompatActivity {
         Button update = findViewById(R.id.update);
         Button back = findViewById(R.id.back);
         Button out = findViewById(R.id.out);
+
+        phone.setText(uInfo.getPhone(),TextView.BufferType.EDITABLE);
+        add.setText(uInfo.getAddress(),TextView.BufferType.EDITABLE);
+        db.setText(uInfo.getSex(),TextView.BufferType.EDITABLE);
+        licensed.setText(uInfo.getLicensed(),TextView.BufferType.EDITABLE);
+        company.setText(uInfo.getCompany(),TextView.BufferType.EDITABLE);
 
 
         update.setOnClickListener(new View.OnClickListener(){

@@ -17,6 +17,17 @@ public class UserInformation {
     public UserInformation(){
 
     }
+    
+    public UserInformation(UserInformation a){
+//        this.name = a.name;
+//        this.email = a.email;
+//        this.role = a.role;
+        this.phone = a.phone;
+        this.sex = a.sex;
+        this.licensed = a.licensed;
+        this.company = a.company;
+        this.address = a.address;
+    }
 
     public String getEmail() {
         return email;
