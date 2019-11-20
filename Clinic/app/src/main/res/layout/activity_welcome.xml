@@ -16,38 +16,47 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <ListView
                 android:id="@+id/listview"
                 android:layout_width="match_parent"
-                android:layout_height="482dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1">
 
             </ListView>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_signout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SIgn out" />
-
-        <Button
-            android:id="@+id/btn_profile"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Go to Your Provider Profile"
-            android:visibility="visible" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_delete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Delete" />
+            <Button
+                android:id="@+id/btn_signout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="SIgn out" />
+
+            <Button
+                android:id="@+id/btn_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Provider Profile"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Delete" />
+        </LinearLayout>
 
     </LinearLayout>
 

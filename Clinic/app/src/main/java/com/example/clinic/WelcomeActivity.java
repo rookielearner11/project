@@ -108,8 +108,6 @@ public class WelcomeActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
                 showData(dataSnapshot);
             }
 
@@ -123,19 +121,38 @@ public class WelcomeActivity extends AppCompatActivity {
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             UserInformation uInfo = new UserInformation();
-            uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName()); //set the name
-            uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail()); //set the email
-            uInfo.setRole(ds.child(userID).getValue(UserInformation.class).getRole()); //set the phone_num
+            uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName());
+            uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail());
+            uInfo.setRole(ds.child(userID).getValue(UserInformation.class).getRole());
+            uInfo.setPhone(ds.child(userID).getValue(UserInformation.class).getPhone());
+            uInfo.setSex(ds.child(userID).getValue(UserInformation.class).getSex());
+            uInfo.setLicensed(ds.child(userID).getValue(UserInformation.class).getLicensed());
+            uInfo.setCompany(ds.child(userID).getValue(UserInformation.class).getCompany());
+            uInfo.setAddress(ds.child(userID).getValue(UserInformation.class).getAddress());
 
-            //display all the information
+
+
             Log.d(TAG, "showData: name: " + uInfo.getName());
             Log.d(TAG, "showData: email: " + uInfo.getEmail());
-            Log.d(TAG, "showData: phone_num: " + uInfo.getRole());
+            Log.d(TAG, "showData: role: " + uInfo.getRole());
+            Log.d(TAG, "showData: phone_num: " + uInfo.getPhone());
+            Log.d(TAG, "showData: generalDescription: " + uInfo.getSex());
+            Log.d(TAG, "showData: Licensed: " + uInfo.getLicensed());
+            Log.d(TAG, "showData: CompanyName: " + uInfo.getCompany());
+            Log.d(TAG, "showData: address: " + uInfo.getAddress());
+
 
             ArrayList<String> array  = new ArrayList<>();
             array.add(uInfo.getName());
             array.add(uInfo.getEmail());
             array.add(uInfo.getRole());
+            array.add(uInfo.getPhone());
+            array.add(uInfo.getSex());
+            array.add(uInfo.getLicensed());
+            array.add(uInfo.getCompany());
+            array.add(uInfo.getAddress());
+
+
             ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,array);
             mListView.setAdapter(adapter);
         }

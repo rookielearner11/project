@@ -30,28 +30,29 @@ public class Profile extends AppCompatActivity {
     EditText phone;
     EditText add;
     EditText company;
-    EditText gd;
+    EditText db;
     EditText licensed;
+    String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
 
         myFirebaseAuth = FirebaseAuth.getInstance();
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
 
-
         phone = findViewById(R.id.phone);
         add = findViewById(R.id.add);
         company = findViewById(R.id.company);
-        gd = findViewById(R.id.gd);
+        db = findViewById(R.id.gd);
         licensed = findViewById(R.id.licensed);
 
         Button update = findViewById(R.id.update);
         Button back = findViewById(R.id.back);
         Button out = findViewById(R.id.out);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+
 
         update.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -59,7 +60,7 @@ public class Profile extends AppCompatActivity {
                 String phoneN = phone.getText().toString();
                 String address = add.getText().toString();
                 String companyN = company.getText().toString();
-                String generalD = gd.getText().toString();
+                String sex = db.getText().toString();
                 String lic = licensed.getText().toString();
 
 
@@ -70,18 +71,18 @@ public class Profile extends AppCompatActivity {
                 }else if (companyN.equals("")){
                     company.setError("This information is mandatory");
                 }else{
-                    String user_id = myFirebaseAuth.getCurrentUser().getUid();
+                    user_id = user.getUid();
                     DatabaseReference myRef1 = database.getReference().child("Users").child(user_id).child("phone");
                     myRef1.setValue(phoneN);
 
                     DatabaseReference myRef2 = database.getReference().child("Users").child(user_id).child("address");
                     myRef2.setValue(address);
 
-                    DatabaseReference myRef3 = database.getReference().child("Users").child(user_id).child("companyName");
+                    DatabaseReference myRef3 = database.getReference().child("Users").child(user_id).child("company");
                     myRef3.setValue(companyN);
 
-                    DatabaseReference myRef4 = database.getReference().child("Users").child(user_id).child("GeneralDescription");
-                    myRef4.setValue(generalD);
+                    DatabaseReference myRef4 = database.getReference().child("Users").child(user_id).child("sex");
+                    myRef4.setValue(sex);
 
                     DatabaseReference myRef5 = database.getReference().child("Users").child(user_id).child("licensed");
                     myRef5.setValue(lic);

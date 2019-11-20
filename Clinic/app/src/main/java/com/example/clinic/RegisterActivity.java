@@ -86,6 +86,23 @@ public class RegisterActivity extends AppCompatActivity {
 
                     DatabaseReference myRef4 = database.getReference().child("Users").child(user_id).child("name");
                     myRef4.setValue(name);
+
+                    DatabaseReference myRef5 = database.getReference().child("Users").child(user_id).child("phone");
+                    myRef5.setValue(" ");
+
+                    DatabaseReference myRef6 = database.getReference().child("Users").child(user_id).child("sex");
+                    myRef6.setValue(" ");
+
+                    DatabaseReference myRef7 = database.getReference().child("Users").child(user_id).child("licensed");
+                    myRef7.setValue(" ");
+
+                    DatabaseReference myRef8 = database.getReference().child("Users").child(user_id).child("company");
+                    myRef8.setValue(" ");
+
+                    DatabaseReference myRef9 = database.getReference().child("Users").child(user_id).child("address");
+                    myRef9.setValue(" ");
+
+
                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                     //}else{
 //                                DatabaseReference myRef1 = database.getReference("acc/patient/"+email.hashCode()+"/email");
