@@ -130,6 +130,7 @@ public class WelcomeActivity extends AppCompatActivity {
             uInfo.setLicensed(ds.child(userID).getValue(UserInformation.class).getLicensed());
             uInfo.setCompany(ds.child(userID).getValue(UserInformation.class).getCompany());
             uInfo.setAddress(ds.child(userID).getValue(UserInformation.class).getAddress());
+            uInfo.setAvailability(ds.child(userID).getValue(UserInformation.class).getAvailability());
 
 
 
@@ -141,6 +142,7 @@ public class WelcomeActivity extends AppCompatActivity {
             Log.d(TAG, "showData: Licensed: " + uInfo.getLicensed());
             Log.d(TAG, "showData: CompanyName: " + uInfo.getCompany());
             Log.d(TAG, "showData: address: " + uInfo.getAddress());
+            Log.d(TAG, "showData: availabilities: "+ uInfo.getAvailability());
 
 
             ArrayList<String> array  = new ArrayList<>();
@@ -152,6 +154,7 @@ public class WelcomeActivity extends AppCompatActivity {
             array.add(uInfo.getLicensed());
             array.add(uInfo.getCompany());
             array.add(uInfo.getAddress());
+            array.add("Availabilities: " + uInfo.getAvailability());
 
 
             ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,array);

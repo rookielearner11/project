@@ -33,6 +33,7 @@ public class Profile extends AppCompatActivity {
     EditText company;
     EditText db;
     EditText licensed;
+    EditText ava;
     String user_id;
 
     @Override
@@ -50,6 +51,7 @@ public class Profile extends AppCompatActivity {
         company = findViewById(R.id.company);
         db = findViewById(R.id.gd);
         licensed = findViewById(R.id.licensed);
+        ava = findViewById(R.id.ava);
 
         Button update = findViewById(R.id.update);
         Button back = findViewById(R.id.back);
@@ -60,6 +62,7 @@ public class Profile extends AppCompatActivity {
         db.setText(uInfo.getSex(),TextView.BufferType.EDITABLE);
         licensed.setText(uInfo.getLicensed(),TextView.BufferType.EDITABLE);
         company.setText(uInfo.getCompany(),TextView.BufferType.EDITABLE);
+        ava.setText(uInfo.getAvailability(), TextView.BufferType.EDITABLE);
 
 
         update.setOnClickListener(new View.OnClickListener(){
@@ -70,6 +73,7 @@ public class Profile extends AppCompatActivity {
                 String companyN = company.getText().toString();
                 String sex = db.getText().toString();
                 String lic = licensed.getText().toString();
+                String avas = ava.getText().toString();
 
 
                     if (phoneN.equals("")){
@@ -94,6 +98,9 @@ public class Profile extends AppCompatActivity {
 
                     DatabaseReference myRef5 = database.getReference().child("Users").child(user_id).child("licensed");
                     myRef5.setValue(lic);
+
+                    DatabaseReference myRef6 = database.getReference().child("Users").child(user_id).child("availability");
+                    myRef6.setValue(avas);
                 }
             }
         });

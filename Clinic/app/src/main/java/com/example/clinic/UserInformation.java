@@ -9,12 +9,14 @@ public class UserInformation {
     private String licensed;
     private String company;
     private String address;
+    private String ava;
 
 
 
 
 
     public UserInformation(){
+        this.ava = "null";
 
     }
     
@@ -27,6 +29,7 @@ public class UserInformation {
         this.licensed = a.licensed;
         this.company = a.company;
         this.address = a.address;
+        this.ava = a.ava;
     }
 
     public String getEmail() {
@@ -90,6 +93,10 @@ public class UserInformation {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public void setAvailability(String ava) {this.ava = ava;}
+
+    public String getAvailability() {return ava; }
 
 
 }
