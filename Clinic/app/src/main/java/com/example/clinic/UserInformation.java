@@ -1,5 +1,7 @@
 package com.example.clinic;
 
+import java.util.ArrayList;
+
 public class UserInformation {
     private String name;
     private String email;
@@ -9,14 +11,13 @@ public class UserInformation {
     private String licensed;
     private String company;
     private String address;
-    private String ava;
+    ArrayList<String> ava = new ArrayList<String>();
 
 
 
 
 
     public UserInformation(){
-        this.ava = "null";
 
     }
     
@@ -94,9 +95,15 @@ public class UserInformation {
         this.address = address;
     }
 
-    public void setAvailability(String ava) {this.ava = ava;}
+    public void setAvailability(String ava) {this.ava.add(ava);}
 
-    public String getAvailability() {return ava; }
+    public String getAvailability() {
+        String res = "Availabilities: \n";
+        for (String item : ava){
+            res = res + item +"\n";
+        }
+        return res;
+    }
 
 
 }

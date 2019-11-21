@@ -1,8 +1,8 @@
 package com.example.clinic;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,22 +11,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.FirebaseError;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseUser;
+
 public class Profile extends AppCompatActivity {
     FirebaseAuth myFirebaseAuth;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
     EditText phone;
     EditText add;
@@ -35,13 +32,36 @@ public class Profile extends AppCompatActivity {
     EditText licensed;
     EditText ava;
     String user_id;
+    TextView avaV;
+    String avaShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         final UserInformation uInfo = WelcomeActivity.uInfo();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        avaV = findViewById(R.id.avaV);
 
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                UserInformation info = new UserInformation();
+                Log.e("Count " ,""+snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    info.setAvailability(postSnapshot.toString());
+                }
+                avaShow = info.getAvailability();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        if (avaShow == null){
+            avaV.setText("Null");
+        }else {
+            avaV.setText(avaShow);
+        }
         myFirebaseAuth = FirebaseAuth.getInstance();
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
@@ -52,17 +72,19 @@ public class Profile extends AppCompatActivity {
         db = findViewById(R.id.gd);
         licensed = findViewById(R.id.licensed);
         ava = findViewById(R.id.ava);
+        user_id = user.getUid();
 
         Button update = findViewById(R.id.update);
         Button back = findViewById(R.id.back);
         Button out = findViewById(R.id.out);
+        Button addb = findViewById(R.id.addb);
+        Button del = findViewById(R.id.del);
 
         phone.setText(uInfo.getPhone(),TextView.BufferType.EDITABLE);
         add.setText(uInfo.getAddress(),TextView.BufferType.EDITABLE);
         db.setText(uInfo.getSex(),TextView.BufferType.EDITABLE);
         licensed.setText(uInfo.getLicensed(),TextView.BufferType.EDITABLE);
         company.setText(uInfo.getCompany(),TextView.BufferType.EDITABLE);
-        ava.setText(uInfo.getAvailability(), TextView.BufferType.EDITABLE);
 
 
         update.setOnClickListener(new View.OnClickListener(){
@@ -73,7 +95,6 @@ public class Profile extends AppCompatActivity {
                 String companyN = company.getText().toString();
                 String sex = db.getText().toString();
                 String lic = licensed.getText().toString();
-                String avas = ava.getText().toString();
 
 
                     if (phoneN.equals("")){
@@ -99,8 +120,6 @@ public class Profile extends AppCompatActivity {
                     DatabaseReference myRef5 = database.getReference().child("Users").child(user_id).child("licensed");
                     myRef5.setValue(lic);
 
-                    DatabaseReference myRef6 = database.getReference().child("Users").child(user_id).child("availability");
-                    myRef6.setValue(avas);
                 }
             }
         });
@@ -140,5 +159,32 @@ public class Profile extends AppCompatActivity {
                 }
             }
         });
+
+        addb.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                String avas = ava.getText().toString();
+                DatabaseReference myRef6 = database.getReference("Users/"+user_id+"/availability/"+avas);
+                myRef6.setValue(avas);
+                Toast.makeText(Profile.this, "Added! Please re-enter this page", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        del.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                final String avas = ava.getText().toString();
+                if(!avas.isEmpty()) {
+                    DatabaseReference myReference = database.getReference("availability/" + avas);
+                    myReference.removeValue();
+
+                    Toast.makeText(Profile.this, "It is deleted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Profile.this, "You must enter a vaild time", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 }
