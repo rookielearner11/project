@@ -20,6 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
 public class Profile extends AppCompatActivity {
     FirebaseAuth myFirebaseAuth;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -41,16 +43,21 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         avaV = findViewById(R.id.avaV);
+        DatabaseReference myRefA = database.getReference("Users/"+user_id);
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRefA.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                UserInformation info = new UserInformation();
-                Log.e("Count " ,""+snapshot.getChildrenCount());
-                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    info.setAvailability(postSnapshot.toString());
+                UserInformation info = snapshot.getValue(UserInformation.class);
+                DataSnapshot avaSnap = snapshot.child("zzz_availability");
+                Iterable<DataSnapshot> avaChilds = new ArrayList<>();
+                UserInformation k = new UserInformation();
+                for (DataSnapshot ava : avaChilds){
+                    String c = ava.getValue(UserInformation.class).toString();
+                    k.setAvailability(c);
                 }
-                avaShow = info.getAvailability();
+                avaShow = k.getAvailability();
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -164,7 +171,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String avas = ava.getText().toString();
-                DatabaseReference myRef6 = database.getReference("Users/"+user_id+"/availability/"+avas);
+                DatabaseReference myRef6 = database.getReference("Users/"+user_id+"/zzz_availability/"+avas);
                 myRef6.setValue(avas);
                 Toast.makeText(Profile.this, "Added! Please re-enter this page", Toast.LENGTH_SHORT).show();
             }
@@ -176,7 +183,7 @@ public class Profile extends AppCompatActivity {
 
                 final String avas = ava.getText().toString();
                 if(!avas.isEmpty()) {
-                    DatabaseReference myReference = database.getReference("availability/" + avas);
+                    DatabaseReference myReference = database.getReference("zzz_availability/" + avas);
                     myReference.removeValue();
 
                     Toast.makeText(Profile.this, "It is deleted", Toast.LENGTH_SHORT).show();

@@ -20,7 +20,7 @@ public class UserInformation {
     public UserInformation(){
 
     }
-    
+
     public UserInformation(UserInformation a){
 //        this.name = a.name;
 //        this.email = a.email;
@@ -104,6 +104,5 @@ public class UserInformation {
         }
         return res;
     }
-
 
 }
