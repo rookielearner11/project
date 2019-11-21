@@ -43,13 +43,14 @@ public class WelcomeActivity extends AppCompatActivity {
     private  String userID;
     private ListView mListView;
     static UserInformation uInfo;
-
+    TextView addServiceText;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        addServiceText = findViewById(R.id.addService);
 
         mListView = (ListView) findViewById(R.id.listview);
         mAuth = FirebaseAuth.getInstance();
@@ -87,6 +88,44 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
             }
         });
+
+        final Button addService = findViewById(R.id.ButtonAddService);
+        addService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String addServiceTxt = addServiceText.getText().toString();
+                if(!addServiceTxt.isEmpty()){
+                    DatabaseReference myRef1 = mFirebaseDatabase.getReference("Users/"+ userID + "/services/" + addServiceTxt);
+
+                    myRef1.setValue(addServiceTxt);
+                    Toast.makeText(WelcomeActivity.this, addServiceTxt + " Service is added / updated", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(WelcomeActivity.this, "Must use existing service", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        final Button removeServicce = findViewById(R.id.ButtonRemoveService);
+        removeServicce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String addServiceTxt = addServiceText.getText().toString();
+                if(!addServiceTxt.isEmpty()){
+                    DatabaseReference myRef2 = mFirebaseDatabase.getReference("Users/"+ userID + "/services/" + addServiceTxt);
+
+                    myRef2.removeValue();
+                    Toast.makeText(WelcomeActivity.this,  addServiceTxt + " is removed", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(WelcomeActivity.this, "Must use existing service", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+
 
 
 
@@ -186,5 +225,6 @@ public class WelcomeActivity extends AppCompatActivity {
     public static UserInformation uInfo(){
         return new UserInformation(uInfo);
     }
+
 
 }
