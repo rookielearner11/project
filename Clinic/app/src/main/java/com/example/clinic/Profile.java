@@ -136,11 +136,11 @@ public class Profile extends AppCompatActivity {
                 String phoneN = phone.getText().toString();
                 String address = add.getText().toString();
                 String companyN = company.getText().toString();
-                if (phoneN.equals("")){
+                if (phoneN.equals(" ")){
                     phone.setError("This information is mandatory");
-                }else if (address.equals("")){
+                }else if (address.equals(" ")){
                     add.setError("This information is mandatory");
-                }else if (companyN.equals("")){
+                }else if (companyN.equals(" ")){
                     company.setError("This information is mandatory");
                 }else {
                     startActivity(new Intent(Profile.this, WelcomeActivity.class));
@@ -154,11 +154,11 @@ public class Profile extends AppCompatActivity {
                 String phoneN = phone.getText().toString();
                 String address = add.getText().toString();
                 String companyN = company.getText().toString();
-                if (phoneN.equals("")){
+                if (phoneN.equals(" ")){
                     phone.setError("This information is mandatory");
-                }else if (address.equals("")){
+                }else if (address.equals(" ")){
                     add.setError("This information is mandatory");
-                }else if (companyN.equals("")){
+                }else if (companyN.equals(" ")){
                     company.setError("This information is mandatory");
                 }else {
                     mAuth.signOut();
