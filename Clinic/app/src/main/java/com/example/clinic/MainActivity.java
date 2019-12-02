@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.hardware.biometrics.BiometricPrompt;
 import android.os.Bundle;
 import android.sax.StartElementListener;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
@@ -28,13 +29,24 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "MainActivity";
     EditText email, pwd;
     Button signBtn, regBtn;
     FirebaseAuth myFirebaseAuth;
     static int emlh;
+    String user_id;
+    FirebaseDatabase database;
+    DatabaseReference rrole;
+    String role;
+
+
     private FirebaseAuth.AuthStateListener myListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         myFirebaseAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
         email = findViewById(R.id.email);
         pwd = findViewById(R.id.pwd);
 
@@ -71,7 +84,16 @@ public class MainActivity extends AppCompatActivity {
                             if (!task.isSuccessful()){
                                 Toast.makeText(MainActivity.this, "Loggin Error", Toast.LENGTH_SHORT).show();
                             }else{
-                                startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
+                                user_id = myFirebaseAuth.getCurrentUser().getUid();
+                                rrole = database.getReference("Users/"+user_id+"/role");
+                                readFromDatabaseR();
+                                if(role.equals("Patient")){
+                                    startActivity(new Intent(MainActivity.this, WelcomePatientActivity.class));
+                                }
+                                else if (role.equals("Employee")){
+                                    startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
+                                }
+
                             }
                         }
                     });
@@ -109,5 +131,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         myFirebaseAuth.addAuthStateListener(myListener);
+    }
+    public void readFromDatabaseR(){
+        rrole.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                role = dataSnapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
     }
 }
