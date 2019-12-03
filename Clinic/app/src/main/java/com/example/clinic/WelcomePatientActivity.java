@@ -33,28 +33,21 @@ public class WelcomePatientActivity extends AppCompatActivity {
     private ListView mListView;
     static UserInformation uInfo;
     TextView addServiceText;
+    TextView addTime;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+        setContentView(R.layout.activity_welcome_patient);
         addServiceText = findViewById(R.id.addService);
-
+        addTime = findViewById(R.id.addTime);
         mListView = (ListView) findViewById(R.id.listview);
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
         final FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
-
-        final Button btn_profile = findViewById(R.id.btn_profile);
-        btn_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(WelcomePatientActivity.this, Profile.class));
-            }
-        });
 
         final Button btn_delete = findViewById(R.id.btn_delete);
         btn_delete.setOnClickListener(new View.OnClickListener() {
@@ -83,10 +76,12 @@ public class WelcomePatientActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final String addServiceTxt = addServiceText.getText().toString();
+                final String addTimeTxt = addTime.getText().toString();
                 if(!addServiceTxt.isEmpty()){
                     DatabaseReference myRef1 = mFirebaseDatabase.getReference("Users/"+ userID + "/services/" + addServiceTxt);
-
+                    DatabaseReference myRef2 = mFirebaseDatabase.getReference("Users/"+ userID + "/services/" + addServiceTxt +"/" + "time");
                     myRef1.setValue(addServiceTxt);
+                    myRef2.setValue(addTimeTxt);
                     Toast.makeText(WelcomePatientActivity.this, addServiceTxt + " Service is added / updated", Toast.LENGTH_SHORT).show();
 
                 } else {

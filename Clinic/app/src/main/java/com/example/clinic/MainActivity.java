@@ -87,11 +87,13 @@ public class MainActivity extends AppCompatActivity {
                                 user_id = myFirebaseAuth.getCurrentUser().getUid();
                                 rrole = database.getReference("Users/"+user_id+"/role");
                                 readFromDatabaseR();
-                                if(role.equals("Patient")){
-                                    startActivity(new Intent(MainActivity.this, WelcomePatientActivity.class));
+                                if (role == null){
+                                    Toast.makeText(MainActivity.this,"You operated too fast. Please Try Again", Toast.LENGTH_SHORT).show();
                                 }
                                 else if (role.equals("Employee")){
                                     startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
+                                }else if (role.equals("Patient")){
+                                    startActivity(new Intent(MainActivity.this, WelcomePatientActivity.class));
                                 }
 
                             }
