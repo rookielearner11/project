@@ -44,6 +44,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private ListView mListView;
     static UserInformation uInfo;
     TextView addServiceText;
+    public static String employeeN;
 
 
     @Override
@@ -96,8 +97,11 @@ public class WelcomeActivity extends AppCompatActivity {
                 final String addServiceTxt = addServiceText.getText().toString();
                 if(!addServiceTxt.isEmpty()){
                     DatabaseReference myRef1 = mFirebaseDatabase.getReference("Users/"+ userID + "/services/" + addServiceTxt);
-
+                    DatabaseReference myRef2 = mFirebaseDatabase.getReference("Users/services/" + addServiceTxt + "/employees");
+                    DatabaseReference myRef3 = mFirebaseDatabase.getReference("Users/list_of_providers/"+employeeN);
                     myRef1.setValue(addServiceTxt);
+                    myRef2.setValue(employeeN);
+                    myRef3.setValue(employeeN);
                     Toast.makeText(WelcomeActivity.this, addServiceTxt + " Service is added / updated", Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -182,7 +186,7 @@ public class WelcomeActivity extends AppCompatActivity {
             Log.d(TAG, "showData: address: " + uInfo.getAddress());
             Log.d(TAG, "showData: availabilities: "+ uInfo.getAvailability());
 
-
+            employeeN = uInfo.getName();
             ArrayList<String> array  = new ArrayList<>();
             array.add(uInfo.getName());
             array.add(uInfo.getEmail());
