@@ -29,7 +29,7 @@ public class WelcomePatientActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
-    private  String userID;
+    private String userID;
     private ListView mListView;
     static UserInformation uInfo;
     TextView addServiceText;
