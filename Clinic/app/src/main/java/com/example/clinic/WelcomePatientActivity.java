@@ -77,7 +77,7 @@ public class WelcomePatientActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final String addServiceTxt = addServiceText.getText().toString();
                 final String addTimeTxt = addTime.getText().toString();
-                if(!addServiceTxt.isEmpty()){
+                if(!addServiceTxt.isEmpty() && !addTimeTxt.isEmpty()){
                     DatabaseReference myRef1 = mFirebaseDatabase.getReference("Users/"+ userID + "/services/" + addServiceTxt);
                     DatabaseReference myRef2 = mFirebaseDatabase.getReference("Users/"+ userID + "/services/" + addServiceTxt +"/" + "time");
                     myRef1.setValue(addServiceTxt);

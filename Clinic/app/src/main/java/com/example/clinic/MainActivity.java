@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }else{
-                    Toast.makeText(MainActivity.this, "Loggin Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Wrong Email or Password", Toast.LENGTH_SHORT).show();
                 }
             }
         });
