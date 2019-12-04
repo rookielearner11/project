@@ -49,6 +49,14 @@ public class WelcomePatientActivity extends AppCompatActivity {
         final FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
 
+        final Button searchProvider = findViewById(R.id.searchProvider);
+        searchProvider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WelcomePatientActivity.this, SearchProvider.class));
+            }
+        });
+
         final Button btn_delete = findViewById(R.id.btn_delete);
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
