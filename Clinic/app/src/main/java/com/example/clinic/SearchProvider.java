@@ -16,11 +16,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class SearchProvider extends AppCompatActivity {
 
     TextView providerName;
     private  String userID;
     private FirebaseAuth mAuth;
+    static ProviderInformation pInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,5 +40,13 @@ public class SearchProvider extends AppCompatActivity {
             }
         });
 
+    }
+    private void showData(DataSnapshot dataSnapshot) {
+        ArrayList<String> unList = new ArrayList<String>();
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            pInfo = new ProviderInformation();
+            pInfo.setName(ds.child(userID).getValue(UserInformation.class).getName());
+            unList.add(pInfo.getName());
+        }
     }
 }
