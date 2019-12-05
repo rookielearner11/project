@@ -173,8 +173,10 @@ public class Profile extends AppCompatActivity {
                 String avas = ava.getText().toString();
                 DatabaseReference myRef6 = database.getReference("Users/"+user_id+"/zzz_availability/"+avas);
                 DatabaseReference myRef7 = database.getReference("Users/list_of_providers/"+WelcomeActivity.employeeN+"/ava/"+avas);
+                DatabaseReference myRef8 = database.getReference("Users/list_of_providers/"+WelcomeActivity.employeeN+"/name");
                 myRef6.setValue(avas);
                 myRef7.setValue(avas);
+                myRef8.setValue(WelcomeActivity.employeeN);
                 Toast.makeText(Profile.this, "Added! Please re-enter this page", Toast.LENGTH_SHORT).show();
             }
         });

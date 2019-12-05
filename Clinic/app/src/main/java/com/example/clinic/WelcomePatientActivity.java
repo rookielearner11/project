@@ -29,7 +29,7 @@ public class WelcomePatientActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
-    private  String userID;
+    private String userID;
     private ListView mListView;
     static UserInformation uInfo;
     TextView addServiceText;
@@ -41,7 +41,6 @@ public class WelcomePatientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_patient);
         addServiceText = findViewById(R.id.addService);
-        addTime = findViewById(R.id.addTime);
         mListView = (ListView) findViewById(R.id.listview);
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -76,44 +75,6 @@ public class WelcomePatientActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mAuth.signOut();
                 startActivity(new Intent(WelcomePatientActivity.this, MainActivity.class));
-            }
-        });
-
-        final Button addService = findViewById(R.id.ButtonAddService);
-        addService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String addServiceTxt = addServiceText.getText().toString();
-                final String addTimeTxt = addTime.getText().toString();
-                if(!addServiceTxt.isEmpty() && !addTimeTxt.isEmpty()){
-                    DatabaseReference myRef1 = mFirebaseDatabase.getReference("Users/"+ userID + "/services/" + addServiceTxt);
-                    DatabaseReference myRef2 = mFirebaseDatabase.getReference("Users/"+ userID + "/services/" + addServiceTxt +"/" + "time");
-                    myRef1.setValue(addServiceTxt);
-                    myRef2.setValue(addTimeTxt);
-                    Toast.makeText(WelcomePatientActivity.this, addServiceTxt + " Service is added / updated", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Toast.makeText(WelcomePatientActivity.this, "Must use existing service", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
-        final Button removeServicce = findViewById(R.id.ButtonRemoveService);
-        removeServicce.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String addServiceTxt = addServiceText.getText().toString();
-                if(!addServiceTxt.isEmpty()){
-                    DatabaseReference myRef2 = mFirebaseDatabase.getReference("Users/"+ userID + "/services/" + addServiceTxt);
-
-                    myRef2.removeValue();
-                    Toast.makeText(WelcomePatientActivity.this,  addServiceTxt + " is removed", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Toast.makeText(WelcomePatientActivity.this, "Must use existing service", Toast.LENGTH_SHORT).show();
-                }
-
             }
         });
 
